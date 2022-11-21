@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    tools {
+        gradle 'Gradle-7'
+    }
+
+
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/jonnygovish/gallery.git'
+            }
+        }
+        stage('Building the project') {
+            steps {
+                // withGradle() {
+                    sh ''
+                // }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing the project'
+                // withGradle() {
+                    sh ''
+                // }
+            }
+        } 
+        stage('Deploy to Heroku') {
+            steps {
+                withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS' )]){
+                sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/salty-island-84208.git'
+                }
+            }
+        }     
+    }
+}     
