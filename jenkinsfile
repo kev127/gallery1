@@ -5,7 +5,9 @@ pipeline {
         gradle 'Gradle-7'
     }
 
-
+    environment {
+        VERSION_NUMBER = '1.0'
+    }
 
     stages {
         stage('Clone repository') {
@@ -16,7 +18,7 @@ pipeline {
         stage('Building the project') {
             steps {
                 // withGradle() {
-                    sh ''
+                    sh 'gradle build'
                 // }
             }
         }
@@ -24,9 +26,16 @@ pipeline {
             steps {
                 echo 'Testing the project'
                 // withGradle() {
-                    sh ''
+                    sh 'gradle test'
                 // }
             }
         } 
-    }
+        stage('Deploy to Heroku') {
+            steps {
+                withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS' )]){
+                    sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/quiet-hamlet-39704.git'
+                }            
+            }         
+        }
+    } 
 }     
