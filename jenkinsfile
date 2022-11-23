@@ -18,13 +18,11 @@ pipeline {
         stage('Building the project') {
             steps {
                 sh 'npm install'
-                }
             }
         }
         stage('Testing the project') {
             steps {
                     sh 'npm test'
-                }
             }
         } 
         stage('Deploy to Heroku') {
