@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        gradle 'Gradle-7'
+        nodejs 'node-19'
     }
 
     environment {
@@ -18,7 +18,7 @@ pipeline {
         stage('Building the project') {
             steps {
                 // withGradle() {
-                    sh 'gradle build'
+                    sh 'npm install'
                 // }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Testing the project'
                 // withGradle() {
-                    sh 'gradle test'
+                    sh 'npm test'
                 // }
             }
         } 
