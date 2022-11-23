@@ -17,17 +17,14 @@ pipeline {
         }
         stage('Building the project') {
             steps {
-                // withGradle() {
-                    sh 'npm install'
-                // }
+                sh 'npm install'
+                }
             }
         }
-        stage('Test') {
+        stage('Testing the project') {
             steps {
-                echo 'Testing the project'
-                // withGradle() {
                     sh 'npm test'
-                // }
+                }
             }
         } 
         stage('Deploy to Heroku') {
