@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'nodejs'
+    }
+
+    environment {
+        VERSION_NUMBER = '1.0'
+    }
+
+    stages {
+        stage('Clone repository') {
+            steps {
+                git 'https://github.com/jonnygovish/gallery.git'
+            }
+        }
+        stage('Building the project') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Testing the project') {
+            steps {
+                    sh 'npm test'
+            }
+        } 
+        stage('Deploy to Heroku') {
+            steps {
+                withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS' )]){
+                    sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/quiet-hamlet-39704.git'
+                }            
+            }         
+        }
+    } 
+}     
