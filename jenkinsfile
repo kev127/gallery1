@@ -35,7 +35,8 @@ pipeline {
     } 
     post{
         success{
-            emailext attachLog: true, body: 'working', subject: 'jenkins sent', to: 'kelvin.keya@student.moringaschool.com'
+            emailext attachLog: true, body: 'working', subject: 'jenkins sent', to: 'kelvin.keya@student.moringaschool.com',
+            slackSend color: "Good", message: "Message from Jenkins pipeline"
         }
         failure{
             slackSend color: "warning", message: "Message from Jenkins pipeline"
