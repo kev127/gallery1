@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Testing the project') {
             steps {
-                    sh 'npm test'
+                    sh ''
             }
         } 
         stage('Deploy to Heroku') {
@@ -33,4 +33,12 @@ pipeline {
             }         
         }
     } 
+    post{
+        success{
+            emailext attachLog: true, body: 'working', subject: 'jenkins sent', to: 'kelvin.keya@student.moringaschool.com'
+        }
+        failure{
+            slackSend colour: "warning", message: "Message from Jenkins pipeline"
+        }
+    }
 }     
