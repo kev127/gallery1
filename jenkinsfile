@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Testing the project') {
             steps {
-                    sh ''
+                    sh 'npm test'
             }
         } 
         stage('Deploy to Heroku') {
